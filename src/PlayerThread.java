@@ -36,7 +36,7 @@ public class PlayerThread implements Runnable {
     }
     /*
     private Card chooseDiscard() {
-        //TODO: Implement
+        //TODO: Choose random card to discard, not including prefered card
     }
     */
 }
