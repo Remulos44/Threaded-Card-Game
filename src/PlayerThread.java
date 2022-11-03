@@ -15,6 +15,14 @@ public class PlayerThread implements Runnable {
         hand = new LinkedList<>();
     }
 
+    public void addCard(Card card) {
+        hand.add(card);
+    }
+
+    public LinkedList<Card> showHand() {
+        return hand;
+    }
+
     public void run() {
         //TODO: Implement
     }
@@ -32,8 +40,4 @@ public class PlayerThread implements Runnable {
         //TODO: Implement
     }
     */
-
-    public LinkedList<Card> showHand() {
-        return hand;
-    }
 }
