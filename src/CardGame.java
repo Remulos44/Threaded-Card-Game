@@ -5,21 +5,26 @@ import java.util.Scanner;
 public class CardGame {
     private static int noPlayers;
     public static void main(String[] args) {
+        // Get number of players
         Scanner scanner = new Scanner(System.in); // Scanner to read inputs
         System.out.println("Please enter the number of players:");
         noPlayers = Integer.parseInt(scanner.nextLine());
 
+        // Get pack file location
         System.out.println("Please enter location of pack to load:");
         String packFile = scanner.nextLine();
         scanner.close();
 
+        // Read file, check for validity
         ArrayList<Card> pack = readFile(packFile); // All cards in the pack
 
+        // Instantiating card decks
         ArrayList<CardDeck> decks = new ArrayList<>(); // List of decks, equal to no. of players
         for (int i=0; i<noPlayers; i++) {
             decks.add(new CardDeck());
         }
 
+        // Instantiating players
         ArrayList<PlayerThread> players = new ArrayList<>(); // List of players
         for (int i=0; i<noPlayers; i++) {
             CardDeck left = decks.get(i); // Deck to the left and right of each player
@@ -42,6 +47,7 @@ public class CardGame {
         }
     }
 
+    // Method to read pack file and determine validity
     private static ArrayList<Card> readFile(String fileName) {
         while (true) {
             try {
