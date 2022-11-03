@@ -1,7 +1,6 @@
 import java.util.LinkedList;
 
 public class PlayerThread implements Runnable {
-    //TODO: Implement
     private static int noOfPlayers = 0;
 
     private LinkedList<Card> hand;
@@ -15,11 +14,11 @@ public class PlayerThread implements Runnable {
         hand = new LinkedList<>();
     }
 
-    public void addCard(Card card) {
+    public void addCard(Card card) { // Add card when dealing at start of game
         hand.add(card);
     }
 
-    public LinkedList<Card> showHand() {
+    public LinkedList<Card> showHand() { // Shows hand of player, used for testing
         return hand;
     }
 
@@ -27,11 +26,11 @@ public class PlayerThread implements Runnable {
         //TODO: Implement
     }
 
-    private void drawCard() {
+    private void drawCard() { // Draws card from left deck
         hand.add(leftDeck.drawCard());
     }
 
-    private void discard(Card card) {
+    private void discard(Card card) { // Discards card to right deck
         rightDeck.addCard(card);
         hand.remove(card);
     }

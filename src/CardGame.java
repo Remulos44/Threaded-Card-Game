@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class CardGame {
     private static int noPlayers;
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // Scanner to read inputs
         System.out.println("Please enter the number of players:");
         noPlayers = Integer.parseInt(scanner.nextLine());
 
@@ -13,16 +13,16 @@ public class CardGame {
         String packFile = scanner.nextLine();
         scanner.close();
 
-        ArrayList<Card> pack = readFile(packFile);
+        ArrayList<Card> pack = readFile(packFile); // All cards in the pack
 
-        ArrayList<CardDeck> decks = new ArrayList<>();
+        ArrayList<CardDeck> decks = new ArrayList<>(); // List of decks, equal to no. of players
         for (int i=0; i<noPlayers; i++) {
             decks.add(new CardDeck());
         }
 
-        ArrayList<PlayerThread> players = new ArrayList<>();
+        ArrayList<PlayerThread> players = new ArrayList<>(); // List of players
         for (int i=0; i<noPlayers; i++) {
-            CardDeck left = decks.get(i);
+            CardDeck left = decks.get(i); // Deck to the left and right of each player
             CardDeck right = decks.get((i+1) % noPlayers);
             players.add(new PlayerThread(left, right));
         }
@@ -45,12 +45,12 @@ public class CardGame {
     private static ArrayList<Card> readFile(String fileName) {
         while (true) {
             try {
-                Scanner reader = new Scanner(new File(fileName));
-                ArrayList<Card> lines = new ArrayList<Card>();
+                Scanner reader = new Scanner(new File(fileName)); // Scanner to read the pack file
+                ArrayList<Card> lines = new ArrayList<Card>(); // List of Cards in the pack
                 while (reader.hasNextLine()) {
                     lines.add(new Card(Integer.parseInt(reader.nextLine())));
                 }
-                if (lines.size() == (8 * noPlayers)) {
+                if (lines.size() == (8 * noPlayers)) { // Check length of pack for validity
                     return lines;
                 } else {
                     System.out.println("Invalid pack, please enter a valid pack to load:");
