@@ -2,11 +2,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class CardDeck {
+    private static int noOfDecks = 0;
+
     private Queue<Card> cards;
+    private int id;
 
     // Constructor
     CardDeck() {
         cards = new LinkedList<>();
+        id = noOfDecks++;
     }
 
     public void addCard(Card card) { // Add card when dealing at start of game
@@ -15,6 +19,10 @@ public class CardDeck {
 
     public Card drawCard() { // For when player draws card from deck
         return cards.remove();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String toString() {

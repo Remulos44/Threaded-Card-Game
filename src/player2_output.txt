@@ -1,0 +1,4 @@
+player 2 initial hand: 15 2 4 14
+player 2 draws a 4 from deck 1
+player 2 draws a 5 from deck 1
+player 2 draws a 8 from deck 1
