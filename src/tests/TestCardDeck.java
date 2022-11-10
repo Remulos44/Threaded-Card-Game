@@ -1,5 +1,4 @@
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TestCardDeck {
@@ -10,5 +9,36 @@ public class TestCardDeck {
         Card card = new Card(3);
         deck.addCard(card);
         assertEquals(3, deck.drawCard().getValue());
+    }
+
+    @Test
+    public void testdrawCard() {
+        CardDeck deck = new CardDeck();
+        Card card;
+        for (int i = 0; i < 4; i++) {
+            card = new Card(1);
+            deck.addCard(card);
+        }
+        boolean works = true;
+        try {
+            for (int i = 0; i < 4; i++) {
+                deck.drawCard();
+            }
+        } catch (Exception e) {
+            works = false;
+        }
+        assertTrue(works);
+        try {
+            deck.drawCard();
+        } catch (Exception e) {
+            works = false;
+        }
+        assertFalse(works);
+    }
+
+    @Test
+    public void testGetId() {
+        CardDeck deck = new CardDeck();
+        assertEquals(1, deck.getId());
     }
 }

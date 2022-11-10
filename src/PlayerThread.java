@@ -1,6 +1,3 @@
-
-//import static org.junit.Assert.assertEquals;
-
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Random;
@@ -105,7 +102,6 @@ public class PlayerThread implements Runnable {
     }
     
     private Card chooseDiscard() {
-        //assertEquals(5, hand.size());
         ArrayList<Card> discardables = new ArrayList<>();
         for (Card card : hand) {
             if (card.getValue() != id) discardables.add(card);

@@ -10,7 +10,7 @@ public class CardDeck {
     // Constructor
     CardDeck() {
         cards = new LinkedList<>();
-        id = noOfDecks++;
+        id = ++noOfDecks;
     }
 
     public void addCard(Card card) { // Add card when dealing at start of game
