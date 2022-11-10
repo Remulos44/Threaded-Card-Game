@@ -1,4 +1,1 @@
-player 1 initial hand: 14 2 13 3
-player 1 draws a 3 from deck 0
-player 1 draws a 7 from deck 0
-player 1 draws a 9 from deck 0
+player 1 initial hand: 1 6 6 3
