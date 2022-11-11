@@ -28,6 +28,8 @@ public class PlayerThread implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("hello my name is " + id);
+
         try {
             FileWriter outputWriter = new FileWriter("player"+id+"_output.txt", false);
             String string = "player "+id+" initial hand:";
@@ -45,18 +47,19 @@ public class PlayerThread implements Runnable {
                 player.endGame(id);
             }
         }
+        while (!ended) {
+            System.out.println(id + " " + leftDeck.toString() + " " + rightDeck.toString());
 
-        try {
-            while (!ended) {
+            Card drawnCard = drawCard();
+            Card toDiscard = chooseDiscard();
+            discard(toDiscard);
+
+            try {
                 FileWriter outputWriter = new FileWriter("player"+id+"_output.txt", true);
-
-                Card drawnCard = drawCard();                
-                Card toDiscard = chooseDiscard();
-                discard(toDiscard);
 
                 String string = "player "+id+" draws a "+drawnCard.getValue()+" from deck "+leftDeck.getId();
                 outputWriter.write("\n"+string);
-    
+
                 string = "player "+id+" discards a "+toDiscard.getValue()+" to deck "+rightDeck.getId();
                 outputWriter.write("\n"+string);
 
@@ -67,15 +70,20 @@ public class PlayerThread implements Runnable {
                 outputWriter.write("\n"+string);
 
                 outputWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-                if (checkWin()) {
-                    for (PlayerThread player : players) {
-                        player.endGame(id);
-                    }
+            if (checkWin() && !ended) {
+                for (PlayerThread player : players) {
+                    player.endGame(id);
                 }
             }
-        } catch (Exception e) {
-            //e.printStackTrace();
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

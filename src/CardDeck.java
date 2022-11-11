@@ -5,7 +5,7 @@ import java.util.Queue;
 public class CardDeck {
     private static int noOfDecks = 0;
 
-    private Queue<Card> cards;
+    private volatile Queue<Card> cards;
     private int id;
 
     // Constructor
@@ -14,11 +14,11 @@ public class CardDeck {
         id = ++noOfDecks;
     }
 
-    public void addCard(Card card) { // Add card when dealing at start of game
+    public synchronized void addCard(Card card) { // Add card when dealing at start of game
         cards.add(card);
     }
 
-    public Card drawCard() { // For when player draws card from deck
+    public synchronized Card drawCard() { // For when player draws card from deck
         return cards.remove();
     }
 
