@@ -1,3 +1,4 @@
+import java.io.FileWriter;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -27,5 +28,23 @@ public class CardDeck {
 
     public String toString() {
         return cards.toString();
+    }
+
+    public void writeResult() {
+        try {
+            FileWriter outputWriter = new FileWriter("deck"+id+"_output.txt");
+            String string = "deck" + id + " contents:";
+            for (Card card : cards) {
+                string = string.concat(" "+card.getValue());
+            }
+            outputWriter.write(string);
+            outputWriter.close();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 }

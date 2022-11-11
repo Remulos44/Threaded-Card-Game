@@ -58,6 +58,9 @@ public class CardGame {
             CardDeck right = decks.get((i+1) % noPlayers);
             players.add(new PlayerThread(left, right));
         }
+        for (PlayerThread player : players) {
+            player.setPlayers(players);
+        }
 
         // Dealing the cards to players
         for (int i=0; i<4; i++) {
