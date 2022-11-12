@@ -9,13 +9,19 @@ public class PlayerThread implements Runnable {
     private ArrayList<PlayerThread> players;
     private int id;
     private CardDeck leftDeck, rightDeck;
-    private boolean ended = false;
+    private volatile boolean ended = false;
+    private FileWriter outputWriter;
 
     PlayerThread(CardDeck left, CardDeck right) {
         leftDeck = left;
         rightDeck = right;
         id = ++noOfPlayers;
         hand = new ArrayList<>();
+        try {
+            outputWriter = new FileWriter("player"+id+"_output.txt", false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addCard(Card card) { // Add card when dealing at start of game
@@ -28,10 +34,9 @@ public class PlayerThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("hello my name is " + id);
+        //System.out.println("hello my name is " + id);
 
         try {
-            FileWriter outputWriter = new FileWriter("player"+id+"_output.txt", false);
             String string = "player "+id+" initial hand:";
             for (Card card : hand) {
                 string = string.concat(" "+card.getValue());
@@ -42,20 +47,25 @@ public class PlayerThread implements Runnable {
             e.printStackTrace();
         }
 
+        try {
+            outputWriter = new FileWriter("player"+id+"_output.txt", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (checkWin()) {
             for (PlayerThread player : players) {
                 player.endGame(id);
             }
         }
         while (!ended) {
-            System.out.println(id + " " + leftDeck.toString() + " " + rightDeck.toString());
+            //System.out.println(id + " " + leftDeck.toString() + " " + rightDeck.toString());
 
             Card drawnCard = drawCard();
             Card toDiscard = chooseDiscard();
             discard(toDiscard);
 
             try {
-                FileWriter outputWriter = new FileWriter("player"+id+"_output.txt", true);
 
                 String string = "player "+id+" draws a "+drawnCard.getValue()+" from deck "+leftDeck.getId();
                 outputWriter.write("\n"+string);
@@ -68,8 +78,6 @@ public class PlayerThread implements Runnable {
                     string = string.concat(" "+card.getValue());
                 }
                 outputWriter.write("\n"+string);
-
-                outputWriter.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -80,17 +88,16 @@ public class PlayerThread implements Runnable {
                 }
             }
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void endGame(int winnerId) {
+    public synchronized void endGame(int winnerId) {
         ended = true;
         try {
-            FileWriter outputWriter = new FileWriter("player"+id+"_output.txt", true);
             String string;
             if (winnerId == id) {
                 //Won
