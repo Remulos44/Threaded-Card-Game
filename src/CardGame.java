@@ -56,11 +56,11 @@ public class CardGame {
         for (int i=0; i<noPlayers; i++) {
             CardDeck left = decks.get(i); // Deck to the left and right of each player
             CardDeck right = decks.get((i+1) % noPlayers);
-            players.add(new PlayerThread(left, right));
+            players.add(new PlayerThread(left, right, players));
         }
-        for (PlayerThread player : players) {
+        /*for (PlayerThread player : players) {
             player.setPlayers(players);
-        }
+        }*/
 
         // Dealing the cards to players
         for (int i=0; i<4; i++) {

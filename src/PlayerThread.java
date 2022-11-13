@@ -12,7 +12,8 @@ public class PlayerThread implements Runnable {
     private volatile boolean ended = false;
     private FileWriter outputWriter;
 
-    PlayerThread(CardDeck left, CardDeck right) {
+    PlayerThread(CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
+        this.players = players;
         leftDeck = left;
         rightDeck = right;
         id = ++noOfPlayers;
@@ -116,7 +117,7 @@ public class PlayerThread implements Runnable {
             outputWriter.write("\n"+string);
             outputWriter.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         leftDeck.writeResult();
     }
