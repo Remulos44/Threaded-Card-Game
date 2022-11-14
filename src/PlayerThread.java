@@ -126,10 +126,6 @@ public class PlayerThread implements Runnable {
         return "ID: " + id + ", cards: " + hand.toString();
     }
 
-    public void setPlayers(ArrayList<PlayerThread> players) {
-        this.players = players;
-    }
-
     private Card drawCard() { // Draws card from left deck
         Card card = leftDeck.drawCard();
         hand.add(card);
