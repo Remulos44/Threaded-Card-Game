@@ -6,41 +6,35 @@ player 4 draws a 6 from deck 4
 player 4 discards a 10 to deck 1
 player 4 current hand is 3 10 5 6
 player 4 draws a 7 from deck 4
-player 4 discards a 5 to deck 1
-player 4 current hand is 3 10 6 7
-player 4 draws a 7 from deck 4
-player 4 discards a 7 to deck 1
-player 4 current hand is 3 10 6 7
-player 4 draws a 2 from deck 4
-player 4 discards a 6 to deck 1
-player 4 current hand is 3 10 7 2
-player 4 draws a 1 from deck 4
 player 4 discards a 10 to deck 1
-player 4 current hand is 3 7 2 1
+player 4 current hand is 3 5 6 7
+player 4 draws a 7 from deck 4
+player 4 discards a 6 to deck 1
+player 4 current hand is 3 5 7 7
+player 4 draws a 10 from deck 4
+player 4 discards a 10 to deck 1
+player 4 current hand is 3 5 7 7
+player 4 draws a 11 from deck 4
+player 4 discards a 11 to deck 1
+player 4 current hand is 3 5 7 7
+player 4 draws a 1 from deck 4
+player 4 discards a 7 to deck 1
+player 4 current hand is 3 5 7 1
+player 4 draws a 5 from deck 4
+player 4 discards a 1 to deck 1
+player 4 current hand is 3 5 7 5
+player 4 draws a 2 from deck 4
+player 4 discards a 5 to deck 1
+player 4 current hand is 3 7 5 2
+player 4 draws a 11 from deck 4
+player 4 discards a 11 to deck 1
+player 4 current hand is 3 7 5 2
 player 4 draws a 5 from deck 4
 player 4 discards a 2 to deck 1
-player 4 current hand is 3 7 1 5
-player 4 draws a 7 from deck 4
+player 4 current hand is 3 7 5 5
+player 4 draws a 8 from deck 4
 player 4 discards a 5 to deck 1
-player 4 current hand is 3 7 1 7
-player 4 draws a 11 from deck 4
-player 4 discards a 7 to deck 1
-player 4 current hand is 3 1 7 11
-player 4 draws a 11 from deck 4
-player 4 discards a 1 to deck 1
-player 4 current hand is 3 7 11 11
-player 4 draws a 5 from deck 4
-player 4 discards a 5 to deck 1
-player 4 current hand is 3 7 11 11
-player 4 draws a 1 from deck 4
-player 4 discards a 1 to deck 1
-player 4 current hand is 3 7 11 11
-player 4 draws a 5 from deck 4
-player 4 discards a 11 to deck 1
-player 4 current hand is 3 7 11 5
-player 4 draws a 10 from deck 4
-player 4 discards a 5 to deck 1
-player 4 current hand is 3 7 11 10
+player 4 current hand is 3 7 5 8
 player 1 has informed player 4 that player 1 has won
 player 4 exits
-player 4 hand: 3 7 11 10
+player 4 hand: 3 7 5 8

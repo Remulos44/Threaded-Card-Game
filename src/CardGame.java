@@ -8,9 +8,11 @@ public class CardGame {
 
     public static void main(String[] args) {
         
-        noPlayers = getNoPlayers();
+        CardGame game = new CardGame();
+        
+        noPlayers = game.getNoPlayers();
 
-        ArrayList<Card> pack = getPack();
+        ArrayList<Card> pack = game.getPack();
 
         // Instantiating card decks
         ArrayList<CardDeck> decks = new ArrayList<>(); // List of decks, equal to no. of players
@@ -46,7 +48,7 @@ public class CardGame {
         }
     }
 
-    private static ArrayList<Card> getPack() {
+    public ArrayList<Card> getPack() {
         System.out.println("Please enter location of pack to load:");
         String packFile = userInp.nextLine();
 
@@ -76,7 +78,7 @@ public class CardGame {
         return pack;
     }
 
-    private static int getNoPlayers() {
+    public int getNoPlayers() {
         // Get number of players
         System.out.println("Please enter the number of players:");
         boolean validNoPlayers = false;
