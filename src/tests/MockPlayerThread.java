@@ -2,12 +2,21 @@ import java.util.ArrayList;
 
 public class MockPlayerThread extends PlayerThread {
     MockPlayerThread(CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
-        super(left, right, null);
+        super(left, right, players);
     }
 
-    private void recordInit() {
-        System.out.println("Bleh bleh bleh");
+    @Override
+    public void recordInit() {
+        System.out.println("init");
     }
-    private void recordMove(Card drawnCard, Card toDiscard) {}
-    private void recordEnding(int winnerId) {}
+
+    @Override
+    public void recordMove(Card drawnCard, Card toDiscard) {
+        System.out.println("move");
+    }
+
+    @Override
+    public void recordEnding(int winnerId) {
+        System.out.println("end");
+    }
 }

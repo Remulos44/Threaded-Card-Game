@@ -17,15 +17,16 @@ public class TestPlayerThread {
 
     @Test
     public void testInitWin() {
+        ArrayList<MockPlayerThread> mockPlayers = new ArrayList<>();
         ArrayList<PlayerThread> players = new ArrayList<>();
-        players.add(new MockPlayerThread(null, null, players));
-        for (PlayerThread player : players) {
-            player.addCard(new Card(1));
-            player.addCard(new Card(1));
-            player.addCard(new Card(1));
-            player.addCard(new Card(1));
-            Thread t = new Thread(player);
-            t.start();
-        }
+        MockPlayerThread mockPlayer = new MockPlayerThread(null, null, players);
+        mockPlayers.add(mockPlayer);
+        players.add(mockPlayer);
+        mockPlayer.addCard(new Card(1));
+        mockPlayer.addCard(new Card(1));
+        mockPlayer.addCard(new Card(1));
+        mockPlayer.addCard(new Card(1));
+        Thread t = new Thread(mockPlayer);
+        t.start();
     }
 }

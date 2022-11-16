@@ -2,11 +2,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MockCardGame extends CardGame {
+    
+    /*
     private static int noPlayers;
 
     private static CardGame game = new MockCardGame();
 
-    /*
     public static void main(String[] args) {
 
         
@@ -86,9 +87,4 @@ public class MockCardGame extends CardGame {
             new Card(2)));
         return pack;
     }
-
-    public PlayerThread createPlayer(CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
-        return new MockPlayerThread(left, right, players);
-    }
-
 }
