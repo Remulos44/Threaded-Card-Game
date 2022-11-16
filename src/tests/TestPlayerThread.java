@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class TestPlayerThread {
@@ -13,8 +16,16 @@ public class TestPlayerThread {
     }
 
     @Test
-    public void testRun() {
-        Thread t = new Thread(new PlayerThread(null, null, null));
-        t.start();
+    public void testInitWin() {
+        ArrayList<PlayerThread> players = new ArrayList<>();
+        players.add(new MockPlayerThread(null, null, players));
+        for (PlayerThread player : players) {
+            player.addCard(new Card(1));
+            player.addCard(new Card(1));
+            player.addCard(new Card(1));
+            player.addCard(new Card(1));
+            Thread t = new Thread(player);
+            t.start();
+        }
     }
 }
