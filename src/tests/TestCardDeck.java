@@ -35,10 +35,4 @@ public class TestCardDeck {
         }
         assertFalse(works);
     }
-
-    @Test
-    public void testGetId() {
-        CardDeck deck = new CardDeck();
-        assertEquals(1, deck.getId());
-    }
 }

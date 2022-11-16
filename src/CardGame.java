@@ -5,10 +5,9 @@ import java.util.Scanner;
 public class CardGame {
     private static int noPlayers;
     private static Scanner userInp = new Scanner(System.in); // Scanner to read inputs
+    private static CardGame game = new CardGame();
 
     public static void main(String[] args) {
-        
-        CardGame game = new CardGame();
         
         noPlayers = game.getNoPlayers();
 
@@ -48,7 +47,7 @@ public class CardGame {
         }
     }
 
-    public ArrayList<Card> getPack() {
+    private ArrayList<Card> getPack() {
         System.out.println("Please enter location of pack to load:");
         String packFile = userInp.nextLine();
 
@@ -78,7 +77,7 @@ public class CardGame {
         return pack;
     }
 
-    public int getNoPlayers() {
+    private int getNoPlayers() {
         // Get number of players
         System.out.println("Please enter the number of players:");
         boolean validNoPlayers = false;

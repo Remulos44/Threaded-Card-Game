@@ -4,9 +4,11 @@ import java.util.Arrays;
 public class MockCardGame extends CardGame {
     private static int noPlayers;
 
+    private static CardGame game = new MockCardGame();
+
+    /*
     public static void main(String[] args) {
-        
-        CardGame game = new MockCardGame();
+
         
         noPlayers = game.getNoPlayers();
 
@@ -19,7 +21,7 @@ public class MockCardGame extends CardGame {
         }
 
         // Instantiating players
-        ArrayList<MockPlayerThread> players = new ArrayList<>(); // List of players
+        ArrayList<PlayerThread> players = new ArrayList<>(); // List of players
         for (int i=0; i<noPlayers; i++) {
             CardDeck left = decks.get(i); // Deck to the left and right of each player
             CardDeck right = decks.get((i+1) % noPlayers);
@@ -44,7 +46,7 @@ public class MockCardGame extends CardGame {
             Thread thread = new Thread(playerThread);
             thread.start();
         }
-    }
+    }*/
 
     public int getNoPlayers() { return 4; }
 
@@ -83,6 +85,10 @@ public class MockCardGame extends CardGame {
             new Card(8),
             new Card(2)));
         return pack;
+    }
+
+    public PlayerThread createPlayer(CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
+        return new MockPlayerThread(left, right, players);
     }
 
 }
