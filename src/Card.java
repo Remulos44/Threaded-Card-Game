@@ -1,8 +1,9 @@
+
 public class Card {
     private int val;
 
     // Constructor
-    Card(int val) {
+    public Card(int val) {
         this.val = val;
     }
 

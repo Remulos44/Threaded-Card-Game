@@ -1,53 +1,37 @@
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CardGame {
-    private static int noPlayers;
-    private static Scanner userInp = new Scanner(System.in); // Scanner to read inputs
-    private static CardGame game = new CardGame();
 
     public static void main(String[] args) {
-        
-        noPlayers = game.getNoPlayers();
 
-        ArrayList<Card> pack = game.getPack();
+        // Scanner to read inputs
+        Scanner userInp = new Scanner(System.in);
+        
+        // Retrieving no. of players from user input
+        int noPlayers = getNoPlayers(userInp);
+
+        // Retrieving card pack from file specified in user input
+        ArrayList<Card> pack = getPack(noPlayers, userInp);
 
         // Instantiating card decks
-        ArrayList<CardDeck> decks = new ArrayList<>(); // List of decks, equal to no. of players
-        for (int i=0; i<noPlayers; i++) {
-            decks.add(new CardDeck());
-        }
+        ArrayList<CardDeck> decks = createDecks(noPlayers);
 
         // Instantiating players
-        ArrayList<PlayerThread> players = new ArrayList<>(); // List of players
-        for (int i=0; i<noPlayers; i++) {
-            CardDeck left = decks.get(i); // Deck to the left and right of each player
-            CardDeck right = decks.get((i+1) % noPlayers);
-            players.add(new PlayerThread(left, right, players));
-        }
+        ArrayList<PlayerThread> players = createPlayers(noPlayers, decks);
 
-        // Dealing the cards to players
-        for (int i=0; i<4; i++) {
-            for (int j=0; j<noPlayers; j++) {
-                players.get(j).addCard(pack.get(i*noPlayers + j));
-            }
-        }
+        // Dealing out cards in pack to players and decks
+        dealOutCards(players, decks, pack);
 
-        // Dealing cards to decks
-        for (int i=0; i<4; i++) {
-            for (int j=0; j<noPlayers; j++) {
-                decks.get(j).addCard(pack.get(i*noPlayers + j + 4*noPlayers));
-            }
-        }
-
-        for (PlayerThread playerThread : players) {
-            Thread thread = new Thread(playerThread);
-            thread.start();
-        }
+        // Starting each player thread
+        startPlaying(players);
     }
 
-    private ArrayList<Card> getPack() {
+    public static ArrayList<Card> getPack(int noPlayers, Scanner userInp) {
+
+        // Asks the user to input the file location of the pack
         System.out.println("Please enter location of pack to load:");
         String packFile = userInp.nextLine();
 
@@ -57,19 +41,24 @@ public class CardGame {
             try {
                 Scanner fileScanner = new Scanner(new File(packFile));
                 while (fileScanner.hasNextLine()) {
-                    //Parses unsigned int so that if a negative number is in the pack file it throws an exception
+                    // Goes through each line in the file and parses each line to an integer
+                    // Parses unsigned int so that if any value that isn't a positive integer is in the pack file it throws an exception
                     int cardVal = Integer.parseUnsignedInt(fileScanner.nextLine());
+                    // A new Card is instantiated with this value and added to the pack list
                     pack.add(new Card(cardVal));
                 }
                 if (pack.size() == 8*noPlayers) {
+                    // If the pack list generated is the correct size 8n, where n is the number of players, the pack is valid and the scanners will close
                     validPack = true;
                     fileScanner.close();
                     userInp.close();
                 } else {
+                    // If the size of the pack is not 8n, where n is the number of players, a new pack file will be requested
                     System.out.println("Invalid pack size, please enter location of a valid pack to load:");
                     packFile = userInp.nextLine();                    
                 }
             } catch (Exception e) {
+                // If something goes wrong while creating the pack, e.g. there is an invalid line or the file does not exist, a new pack will be requested
                 System.out.println("Invalid pack name, please enter location of a valid pack to load:");
                 packFile = userInp.nextLine();
             }
@@ -77,8 +66,9 @@ public class CardGame {
         return pack;
     }
 
-    private int getNoPlayers() {
+    public static int getNoPlayers(Scanner userInp) {
         // Get number of players
+        int noPlayers = 0;
         System.out.println("Please enter the number of players:");
         boolean validNoPlayers = false;
         while (!validNoPlayers) {
@@ -90,5 +80,46 @@ public class CardGame {
             }
         }
         return noPlayers;
+    }
+
+    public static ArrayList<CardDeck> createDecks(int noPlayers) {
+        ArrayList<CardDeck> decks = new ArrayList<>(); // List of decks, equal to no. of players
+        for (int i=0; i<noPlayers; i++) {
+            decks.add(new CardDeck());
+        }
+        return decks;
+    }
+
+    public static ArrayList<PlayerThread> createPlayers(int noPlayers, ArrayList<CardDeck> decks) {
+        ArrayList<PlayerThread> players = new ArrayList<>(); // List of players
+        for (int i=0; i<noPlayers; i++) {
+            CardDeck left = decks.get(i); // Deck to the left and right of each player
+            CardDeck right = decks.get((i+1) % noPlayers);
+            players.add(new PlayerThread(left, right, players));
+        }
+        return players;
+    }
+
+    public static void dealOutCards(ArrayList<PlayerThread> players, ArrayList<CardDeck> decks, ArrayList<Card> pack) {
+        // Dealing the cards to players
+        for (int i=0; i<4; i++) {
+            for (int j=0; j<players.size(); j++) {
+                players.get(j).addCard(pack.get(i*players.size() + j));
+            }
+        }
+
+        // Dealing cards to decks
+        for (int i=0; i<4; i++) {
+            for (int j=0; j<players.size(); j++) {
+                decks.get(j).addCard(pack.get(i*players.size() + j + 4*players.size()));
+            }
+        }
+    }
+
+    public static void startPlaying(ArrayList<PlayerThread> players) {
+        for (PlayerThread playerThread : players) {
+            Thread thread = new Thread(playerThread);
+            thread.start();
+        }
     }
 }

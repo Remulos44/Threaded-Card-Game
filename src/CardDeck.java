@@ -1,3 +1,4 @@
+
 import java.io.FileWriter;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,7 +10,7 @@ public class CardDeck {
     private int id;
 
     // Constructor
-    CardDeck() {
+    public CardDeck() {
         cards = new LinkedList<>();
         id = ++noOfDecks;
     }

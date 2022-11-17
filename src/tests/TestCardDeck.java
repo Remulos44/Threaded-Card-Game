@@ -1,6 +1,9 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import cardgame.Card;
+import cardgame.CardDeck;
+
 public class TestCardDeck {
     
     @Test

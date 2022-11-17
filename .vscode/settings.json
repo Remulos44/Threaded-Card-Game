@@ -1,7 +1,7 @@
 {
     "java.project.sourcePaths": [
         "src/tests",
-        "src/main",
+        "src/cardgame",
         "src"
     ]
 }

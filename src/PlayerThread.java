@@ -1,3 +1,4 @@
+
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,7 +19,7 @@ public class PlayerThread implements Runnable {
 
     private FileWriter outputWriter;         // Writes to the file player[id]_output.txt
 
-    PlayerThread(CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
+    public PlayerThread(CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
         this.players = players;
         leftDeck = left;
         rightDeck = right;
@@ -70,6 +71,12 @@ public class PlayerThread implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        try {
+            // Finally, close the FileWriter
+            outputWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -195,9 +202,6 @@ public class PlayerThread implements Runnable {
             }
             // After the game ends, record the player's final hand in player[id]_output.txt
             outputWriter.write("\n"+string);
-
-            // Finally, close the FileWriter
-            outputWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

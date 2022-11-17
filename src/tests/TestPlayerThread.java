@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import cardgame.Card;
+import cardgame.CardDeck;
+import cardgame.PlayerThread;
+
 public class TestPlayerThread {
 
     @Test
@@ -17,16 +21,15 @@ public class TestPlayerThread {
 
     @Test
     public void testInitWin() {
-        ArrayList<MockPlayerThread> mockPlayers = new ArrayList<>();
         ArrayList<PlayerThread> players = new ArrayList<>();
-        MockPlayerThread mockPlayer = new MockPlayerThread(null, null, players);
-        mockPlayers.add(mockPlayer);
-        players.add(mockPlayer);
-        mockPlayer.addCard(new Card(1));
-        mockPlayer.addCard(new Card(1));
-        mockPlayer.addCard(new Card(1));
-        mockPlayer.addCard(new Card(1));
-        Thread t = new Thread(mockPlayer);
+        CardDeck left = new CardDeck();
+        PlayerThread player = new PlayerThread(left, null, players);
+        players.add(player);
+        player.addCard(new Card(1));
+        player.addCard(new Card(1));
+        player.addCard(new Card(1));
+        player.addCard(new Card(1));
+        Thread t = new Thread(player);
         t.start();
     }
 }
