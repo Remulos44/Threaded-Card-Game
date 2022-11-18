@@ -85,7 +85,7 @@ public class CardGame {
     public static ArrayList<CardDeck> createDecks(int noPlayers) {
         ArrayList<CardDeck> decks = new ArrayList<>(); // List of decks, equal to no. of players
         for (int i=0; i<noPlayers; i++) {
-            decks.add(new CardDeck());
+            decks.add(new CardDeck(i+1));
         }
         return decks;
     }
@@ -93,9 +93,10 @@ public class CardGame {
     public static ArrayList<PlayerThread> createPlayers(int noPlayers, ArrayList<CardDeck> decks) {
         ArrayList<PlayerThread> players = new ArrayList<>(); // List of players
         for (int i=0; i<noPlayers; i++) {
-            CardDeck left = decks.get(i); // Deck to the left and right of each player
+            // Deck to the left and right of each player
+            CardDeck left = decks.get(i);
             CardDeck right = decks.get((i+1) % noPlayers);
-            players.add(new PlayerThread(left, right, players));
+            players.add(new PlayerThread(i+1, left, right, players));
         }
         return players;
     }
@@ -103,7 +104,9 @@ public class CardGame {
     public static void dealOutCards(ArrayList<PlayerThread> players, ArrayList<CardDeck> decks, ArrayList<Card> pack) {
         // Dealing the cards to players
         for (int i=0; i<4; i++) {
+            // i represents the card being dealt to each player, j represents the player the card is being dealt to
             for (int j=0; j<players.size(); j++) {
+                // Cards are added sequentially to the player's hands in a round-robin fashion
                 players.get(j).addCard(pack.get(i*players.size() + j));
             }
         }
@@ -118,6 +121,7 @@ public class CardGame {
 
     public static void startPlaying(ArrayList<PlayerThread> players) {
         for (PlayerThread playerThread : players) {
+            // Creates and starts a thread for each player
             Thread thread = new Thread(playerThread);
             thread.start();
         }

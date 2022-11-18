@@ -4,15 +4,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class CardDeck {
-    private static int noOfDecks = 0;
 
     private volatile Queue<Card> cards;
     private int id;
 
     // Constructor
-    public CardDeck() {
+    public CardDeck(int id) {
         cards = new LinkedList<>();
-        id = ++noOfDecks;
+        this.id = id;
     }
 
     public synchronized void addCard(Card card) { // Add card when dealing at start of game
@@ -41,7 +40,7 @@ public class CardDeck {
             outputWriter.write(string);
             outputWriter.close();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

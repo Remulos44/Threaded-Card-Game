@@ -5,8 +5,6 @@ import java.util.Random;
 
 public class PlayerThread implements Runnable {
 
-    private static int noOfPlayers =  0;     // The number of instances of PlayerThread, used to automatically assign IDs
-
     private ArrayList<Card> hand;            // The player's hand as a list of cards
 
     private ArrayList<PlayerThread> players; // The list of all players in the game
@@ -19,12 +17,11 @@ public class PlayerThread implements Runnable {
 
     private FileWriter outputWriter;         // Writes to the file player[id]_output.txt
 
-    public PlayerThread(CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
+    public PlayerThread(int id, CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
         this.players = players;
         leftDeck = left;
         rightDeck = right;
-        // Player ID is automatically assigned based on how many have been instantiated
-        id = ++noOfPlayers;
+        this.id = id;
         hand = new ArrayList<>();
     }
 

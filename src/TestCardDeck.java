@@ -1,14 +1,11 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import cardgame.Card;
-import cardgame.CardDeck;
-
 public class TestCardDeck {
     
     @Test
     public void testaddCard() {
-        CardDeck deck = new CardDeck();
+        CardDeck deck = new CardDeck(1);
         Card card = new Card(3);
         deck.addCard(card);
         assertEquals(3, deck.drawCard().getValue());
@@ -16,7 +13,7 @@ public class TestCardDeck {
 
     @Test
     public void testdrawCard() {
-        CardDeck deck = new CardDeck();
+        CardDeck deck = new CardDeck(1);
         Card card;
         for (int i = 0; i < 4; i++) {
             card = new Card(1);

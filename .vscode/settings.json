@@ -1,7 +1,7 @@
 {
-    "java.project.sourcePaths": [
-        "src/tests",
-        "src/cardgame",
-        "src"
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
     ]
 }

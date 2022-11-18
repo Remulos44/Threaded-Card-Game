@@ -1,5 +1,3 @@
-import cardgame.Card;
-
 import static org.junit.Assert.*;
 import org.junit.Test;
 
