@@ -18,6 +18,7 @@ public class PlayerThread implements Runnable {
     private FileWriter outputWriter;         // Writes to the file player[id]_output.txt
 
     public PlayerThread(int id, CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
+        // Constructor
         this.players = players;
         leftDeck = left;
         rightDeck = right;
@@ -25,11 +26,13 @@ public class PlayerThread implements Runnable {
         hand = new ArrayList<>();
     }
 
-    public void addCard(Card card) { // Add card when dealing at start of game
+    public void addCard(Card card) {
+        // Add card when dealing at start of game
         hand.add(card);
     }
 
-    public ArrayList<Card> showHand() { // Shows hand of player, used for testing
+    public ArrayList<Card> showHand() {
+        // Shows hand of player, used for testing
         return hand;
     }
 
@@ -69,12 +72,6 @@ public class PlayerThread implements Runnable {
                 e.printStackTrace();
             }
         }
-        try {
-            // Finally, close the FileWriter
-            outputWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public synchronized void endGame(int winnerId) {
@@ -88,6 +85,38 @@ public class PlayerThread implements Runnable {
     @Deprecated
     public String toString() {
         return "ID: " + id + ", cards: " + hand.toString();
+    }
+
+    public String getInitString() {
+        String string = "player "+id+" initial hand:";
+        for (Card card : hand) {
+            string = string.concat(" "+card.getValue());
+        }
+        return string;
+    }
+
+    public String getMoveString(Card drawnCard, Card toDiscard) {
+        String string = "\nplayer "+id+" draws a "+drawnCard.getValue()+" from deck "+leftDeck.getId();
+        string = string.concat("\nplayer "+id+" discards a "+toDiscard.getValue()+" to deck "+rightDeck.getId());
+        string = string.concat("\nplayer "+id+" current hand is");
+        for (Card card : hand) {
+            string = string.concat(" "+card.getValue());
+        }
+        return string;
+    }
+
+    public String getEndingString(int winnerId) {
+        String string;
+        if (winnerId == id) {
+            string = "\nplayer " + id + " wins";
+        } else {
+            string = "\nplayer " + winnerId + " has informed player " + id + " that player " + winnerId + " has won";
+        }
+        string = string.concat("\nplayer " + id + " exits\nplayer " + id + " hand:");
+        for (Card card : hand) {
+            string = string.concat(" "+card.getValue());
+        }
+        return string;
     }
 
     private Card drawCard() {
@@ -134,17 +163,17 @@ public class PlayerThread implements Runnable {
         return discardables.get(rand.nextInt(discardables.size()));
     }
 
-    public void recordInit() {
+    private void recordInit() {
+
+        // Retrieves the string to record to the output file
+        String outputString = getInitString();
+
         try {
             // Creates FileWriter that overwrites the file instead of appending to it
             outputWriter = new FileWriter("player"+id+"_output.txt", false);
 
-            String string = "player "+id+" initial hand:";
-            for (Card card : hand) {
-                string = string.concat(" "+card.getValue());
-            }
             // Writes info about the player's initial hand to the file
-            outputWriter.write(string);
+            outputWriter.write(outputString);
 
             // Closes the FileWriter
             outputWriter.close();
@@ -156,52 +185,43 @@ public class PlayerThread implements Runnable {
         }
     }
 
-    public void recordMove(Card drawnCard, Card toDiscard) {
+    private void recordMove(Card drawnCard, Card toDiscard) {
+
+        // Retrieves the string to record to the output file
+        String outputString = getMoveString(drawnCard, toDiscard);
+
         try {
-            String string = "player "+id+" draws a "+drawnCard.getValue()+" from deck "+leftDeck.getId();
-            // Writes info about the player's draw from this move to player[id]_output.txt
-            outputWriter.write("\n"+string);
-
-            string = "player "+id+" discards a "+toDiscard.getValue()+" to deck "+rightDeck.getId();
-            // Writes info about the player's discard from this move to the file
-            outputWriter.write("\n"+string);
-
-            string = "player "+id+" current hand is";
-            for (Card card : hand) {
-                string = string.concat(" "+card.getValue());
-            }
-            // Writes info about the player's current hand after this move to the file
-            outputWriter.write("\n"+string);
+            // Writes info about the player's draw, discard, and current hand after this move to the file
+            outputWriter.write(outputString);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void recordEnding(int winnerId) {
+    private void recordEnding(int winnerId) {
+
+        if (winnerId == id) {
+            // Outputs which player has won to the console
+            System.out.println("player " + id + " wins");
+        }
+
+        // Retrieves the string to record to the output file
+        String outputString = getEndingString(winnerId);
+
         try {
-            String string;
-            if (winnerId == id) {
-                // If this player has won, print "player [id] wins"
-                System.out.println("player " + id + " wins");
+            // Closes the old FileWriter and creates a new one so that in the case where two players win simulatenously,
+            // the second ending recording does not fail due to the FileWriter being closed by the first ending recording
+            outputWriter.close();
+            outputWriter = new FileWriter("player"+id+"_output.txt", true);
 
-                string = "player " + id + " wins";
-                // Then, write that this player has won in player[id]_output.txt
-                outputWriter.write("\n"+string);
-            } else {
-                string = "player " + winnerId + " has informed player " + id + " that player " + winnerId + " has won";
-                // If this player has not won, write to player[id]_output.txt which player has won
-                outputWriter.write("\n"+string);
-            }
-
-            string = "player " + id + " exits\nplayer " + id + " hand:";
-            for (Card card : hand) {
-                string = string.concat(" "+card.getValue());
-            }
-            // After the game ends, record the player's final hand in player[id]_output.txt
-            outputWriter.write("\n"+string);
+            // After the game ends, records the winner and this player's final hand in player[id]_output.txt
+            outputWriter.write(outputString);
+            // Closes the FileWriter
+            outputWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         // Tells the deck to the player's left to record its final state
         leftDeck.writeResult();
     }

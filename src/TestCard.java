@@ -7,6 +7,5 @@ public class TestCard {
     public void testCard() {
         Card card = new Card(0);
         assertEquals(0, card.getValue());
-        assertEquals("Card: 0", card.toString());
     }
 }

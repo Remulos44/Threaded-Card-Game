@@ -31,7 +31,6 @@ public class TestCardGame {
     @Test
     public void testCreateDecks() {
 
-
         decks = CardGame.createDecks(4);
     }
 
@@ -62,23 +61,32 @@ public class TestCardGame {
         for (PlayerThread player : players) {
             assertEquals(0, player.showHand().size());
         }
+        for (CardDeck deck : decks) {
+            assertEquals(0, deck.showDeck().size());
+        }
         
         CardGame.dealOutCards(players, decks, pack);
 
+        assertEquals(decks.size(), players.size());
         for (PlayerThread player : players) {
             assertEquals(4, player.showHand().size());
         }
-        assertEquals(decks.size(), players.size());
+        for (CardDeck deck : decks) {
+            assertEquals(4, deck.showDeck().size());
+        }
     }
 
     @Test
     public void testStartPlaying() {
         
-        decks = CardGame.createDecks(4);
-        players = CardGame.createPlayers(4, decks);
-        CardGame.dealOutCards(players, decks, pack);
-
-        CardGame.startPlaying(players);
+        for (int i = 0; i < 50; i++) {
+            decks = CardGame.createDecks(4);
+            players = CardGame.createPlayers(4, decks);
+            CardGame.dealOutCards(players, decks, pack);
+    
+            CardGame.startPlaying(players);
+            
+        }
 
         
     }
