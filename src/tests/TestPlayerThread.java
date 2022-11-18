@@ -1,8 +1,13 @@
+package tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 import org.junit.Test;
+
+import main.Card;
+import main.CardDeck;
+import main.PlayerThread;
 
 public class TestPlayerThread {
 
