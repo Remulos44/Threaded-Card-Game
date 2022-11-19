@@ -7,11 +7,15 @@ import java.util.Queue;
 public class CardDeck {
 
     private volatile Queue<Card> cards; // Cards in deck represented as a queue due to the FIFO nature of drawing and discarding
+
     private int id;                     // The ID of the deck
 
-    public CardDeck(int id) {
+    private boolean record;             // Whether the deck should record its final state to the output file or not
+
+    public CardDeck(int id, boolean record) {
         cards = new LinkedList<>();
         this.id = id;
+        this.record = record;
     }
 
     public synchronized void addCard(Card card) {
@@ -35,21 +39,23 @@ public class CardDeck {
     }
 
     public void writeResult() {
-        try {
-            // Creates a FileWriter to record the result to deck[id]_output.txt
-            FileWriter outputWriter = new FileWriter("deck"+id+"_output.txt");
-            String string = "deck" + id + " contents:";
-            for (Card card : cards) {
-                string = string.concat(" "+card.getValue());
+        if (record) {
+            try {
+                // Creates a FileWriter to record the result to deck[id]_output.txt
+                FileWriter outputWriter = new FileWriter("deck"+id+"_output.txt");
+                String string = "deck" + id + " contents:";
+                for (Card card : cards) {
+                    string = string.concat(" "+card.getValue());
+                }
+                // Writes the cards in the deck at the end of the game to the file
+                outputWriter.write(string);
+
+                // Closes the FileWriter
+                outputWriter.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            // Writes the cards in the deck at the end of the game to the file
-            outputWriter.write(string);
-
-            // Closes the FileWriter
-            outputWriter.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

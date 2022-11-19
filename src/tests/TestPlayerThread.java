@@ -14,7 +14,7 @@ public class TestPlayerThread {
     @Test
     public void testaddCard() {
         Card c1 = new Card(1);
-        PlayerThread player = new PlayerThread(1, null, null, null);
+        PlayerThread player = new PlayerThread(1, null, null, null, false);
         assertEquals(0, player.showHand().size());
         player.addCard(c1);
         assertEquals(1, player.showHand().size());
@@ -23,8 +23,8 @@ public class TestPlayerThread {
     @Test
     public void testInitWin() {
         ArrayList<PlayerThread> players = new ArrayList<>();
-        CardDeck left = new CardDeck(1);
-        PlayerThread player = new PlayerThread(1, left, null, players);
+        CardDeck left = new CardDeck(1, false);
+        PlayerThread player = new PlayerThread(1, left, null, players, false);
         players.add(player);
         player.addCard(new Card(1));
         player.addCard(new Card(1));
@@ -37,8 +37,8 @@ public class TestPlayerThread {
     @Test
     public void testGetInitString() {
         ArrayList<PlayerThread> players = new ArrayList<>();
-        CardDeck left = new CardDeck(1);
-        PlayerThread player = new PlayerThread(1, left, null, players);
+        CardDeck left = new CardDeck(1, false);
+        PlayerThread player = new PlayerThread(1, left, null, players, false);
         players.add(player);
         player.addCard(new Card(1));
         player.addCard(new Card(1));
@@ -51,9 +51,9 @@ public class TestPlayerThread {
     @Test
     public void testGetMoveString() {
         ArrayList<PlayerThread> players = new ArrayList<>();
-        CardDeck left = new CardDeck(1);
-        CardDeck right = new CardDeck(2);
-        PlayerThread player = new PlayerThread(1, left, right, players);
+        CardDeck left = new CardDeck(1, false);
+        CardDeck right = new CardDeck(2, false);
+        PlayerThread player = new PlayerThread(1, left, right, players, false);
         players.add(player);
         player.addCard(new Card(1));
         player.addCard(new Card(1));
@@ -69,8 +69,8 @@ public class TestPlayerThread {
     @Test
     public void testGetEndingString() {
         ArrayList<PlayerThread> players = new ArrayList<>();
-        CardDeck left = new CardDeck(1);
-        PlayerThread player = new PlayerThread(1, left, null, players);
+        CardDeck left = new CardDeck(1, false);
+        PlayerThread player = new PlayerThread(1, left, null, players, false);
         players.add(player);
         player.addCard(new Card(1));
         player.addCard(new Card(2));

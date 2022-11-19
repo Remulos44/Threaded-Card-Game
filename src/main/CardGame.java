@@ -18,10 +18,10 @@ public class CardGame {
         ArrayList<Card> pack = getPack(noPlayers, userInp);
 
         // Instantiating card decks
-        ArrayList<CardDeck> decks = createDecks(noPlayers);
+        ArrayList<CardDeck> decks = createDecks(noPlayers, true);
 
         // Instantiating players
-        ArrayList<PlayerThread> players = createPlayers(noPlayers, decks);
+        ArrayList<PlayerThread> players = createPlayers(noPlayers, decks, true);
 
         // Dealing out cards in pack to players and decks
         dealOutCards(players, decks, pack);
@@ -83,21 +83,21 @@ public class CardGame {
         return noPlayers;
     }
 
-    public static ArrayList<CardDeck> createDecks(int noPlayers) {
+    public static ArrayList<CardDeck> createDecks(int noPlayers, boolean record) {
         ArrayList<CardDeck> decks = new ArrayList<>(); // List of decks, equal to no. of players
         for (int i=0; i<noPlayers; i++) {
-            decks.add(new CardDeck(i+1));
+            decks.add(new CardDeck(i+1, record));
         }
         return decks;
     }
 
-    public static ArrayList<PlayerThread> createPlayers(int noPlayers, ArrayList<CardDeck> decks) {
+    public static ArrayList<PlayerThread> createPlayers(int noPlayers, ArrayList<CardDeck> decks, boolean record) {
         ArrayList<PlayerThread> players = new ArrayList<>(); // List of players
         for (int i=0; i<noPlayers; i++) {
             // Deck to the left and right of each player
             CardDeck left = decks.get(i);
             CardDeck right = decks.get((i+1) % noPlayers);
-            players.add(new PlayerThread(i+1, left, right, players));
+            players.add(new PlayerThread(i+1, left, right, players, record));
         }
         return players;
     }

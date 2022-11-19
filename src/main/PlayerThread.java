@@ -18,12 +18,15 @@ public class PlayerThread implements Runnable {
 
     private FileWriter outputWriter;         // Writes to the file player[id]_output.txt
 
-    public PlayerThread(int id, CardDeck left, CardDeck right, ArrayList<PlayerThread> players) {
+    private boolean record;                  // Whether the player should record its moves and initial/final hand to the output file or not 
+
+    public PlayerThread(int id, CardDeck left, CardDeck right, ArrayList<PlayerThread> players, boolean record) {
         // Constructor
         this.players = players;
         leftDeck = left;
         rightDeck = right;
         this.id = id;
+        this.record = record;
         hand = new ArrayList<>();
     }
 
@@ -165,62 +168,68 @@ public class PlayerThread implements Runnable {
     }
 
     private void recordInit() {
+        if (record) {
+                
+            // Retrieves the string to record to the output file
+            String outputString = getInitString();
 
-        // Retrieves the string to record to the output file
-        String outputString = getInitString();
+            try {
+                // Creates FileWriter that overwrites the file instead of appending to it
+                outputWriter = new FileWriter("player"+id+"_output.txt", false);
 
-        try {
-            // Creates FileWriter that overwrites the file instead of appending to it
-            outputWriter = new FileWriter("player"+id+"_output.txt", false);
+                // Writes info about the player's initial hand to the file
+                outputWriter.write(outputString);
 
-            // Writes info about the player's initial hand to the file
-            outputWriter.write(outputString);
+                // Closes the FileWriter
+                outputWriter.close();
 
-            // Closes the FileWriter
-            outputWriter.close();
-
-            // Creates a new FileWriter that appends to this file instead of overwriting
-            outputWriter = new FileWriter("player"+id+"_output.txt", true);
-        } catch (Exception e) {
-            e.printStackTrace();
+                // Creates a new FileWriter that appends to this file instead of overwriting
+                outputWriter = new FileWriter("player"+id+"_output.txt", true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void recordMove(Card drawnCard, Card toDiscard) {
+        if (record) {
 
-        // Retrieves the string to record to the output file
-        String outputString = getMoveString(drawnCard, toDiscard);
+            // Retrieves the string to record to the output file
+            String outputString = getMoveString(drawnCard, toDiscard);
 
-        try {
-            // Writes info about the player's draw, discard, and current hand after this move to the file
-            outputWriter.write(outputString);
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                // Writes info about the player's draw, discard, and current hand after this move to the file
+                outputWriter.write(outputString);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void recordEnding(int winnerId) {
 
-        if (winnerId == id) {
-            // Outputs which player has won to the console
-            System.out.println("player " + id + " wins");
-        }
+        if (record) {
+            if (winnerId == id) {
+                // Outputs which player has won to the console
+                System.out.println("player " + id + " wins");
+            }
 
-        // Retrieves the string to record to the output file
-        String outputString = getEndingString(winnerId);
+            // Retrieves the string to record to the output file
+            String outputString = getEndingString(winnerId);
 
-        try {
-            // Closes the old FileWriter and creates a new one so that in the case where two players win simulatenously,
-            // the second ending recording does not fail due to the FileWriter being closed by the first ending recording
-            outputWriter.close();
-            outputWriter = new FileWriter("player"+id+"_output.txt", true);
+            try {
+                // Closes the old FileWriter and creates a new one so that in the case where two players win simulatenously,
+                // the second ending recording does not fail due to the FileWriter being closed by the first ending recording
+                outputWriter.close();
+                outputWriter = new FileWriter("player"+id+"_output.txt", true);
 
-            // After the game ends, records the winner and this player's final hand in player[id]_output.txt
-            outputWriter.write(outputString);
-            // Closes the FileWriter
-            outputWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+                // After the game ends, records the winner and this player's final hand in player[id]_output.txt
+                outputWriter.write(outputString);
+                // Closes the FileWriter
+                outputWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // Tells the deck to the player's left to record its final state
