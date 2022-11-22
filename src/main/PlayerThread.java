@@ -86,12 +86,12 @@ public class PlayerThread implements Runnable {
         recordEnding(winnerId);
     }
 
-    @Deprecated
     public String toString() {
         return "ID: " + id + ", cards: " + hand.toString();
     }
 
     public String getInitString() {
+        // Builds a string of what to output at the beginning of the game
         String string = "player "+id+" initial hand:";
         for (Card card : hand) {
             string = string.concat(" "+card.getValue());
@@ -100,6 +100,7 @@ public class PlayerThread implements Runnable {
     }
 
     public String getMoveString(Card drawnCard, Card toDiscard) {
+        // Builds a string of what to output after each turn the player takes
         String string = "\nplayer "+id+" draws a "+drawnCard.getValue()+" from deck "+leftDeck.getId();
         string = string.concat("\nplayer "+id+" discards a "+toDiscard.getValue()+" to deck "+rightDeck.getId());
         string = string.concat("\nplayer "+id+" current hand is");
@@ -110,6 +111,7 @@ public class PlayerThread implements Runnable {
     }
 
     public String getEndingString(int winnerId) {
+        // Builds a string of what to output after the game ends
         String string;
         if (winnerId == id) {
             string = "\nplayer " + id + " wins";

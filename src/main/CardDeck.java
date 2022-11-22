@@ -33,9 +33,16 @@ public class CardDeck {
         return id;
     }
 
-    @Deprecated
     public String toString() {
         return cards.toString();
+    }
+
+    public String getOutputString() {
+        String string = "deck" + id + " contents:";
+            for (Card card : cards) {
+                string = string.concat(" "+card.getValue());
+            }
+        return string;
     }
 
     public void writeResult() {
@@ -43,12 +50,9 @@ public class CardDeck {
             try {
                 // Creates a FileWriter to record the result to deck[id]_output.txt
                 FileWriter outputWriter = new FileWriter("deck"+id+"_output.txt");
-                String string = "deck" + id + " contents:";
-                for (Card card : cards) {
-                    string = string.concat(" "+card.getValue());
-                }
+                String outputString = getOutputString();
                 // Writes the cards in the deck at the end of the game to the file
-                outputWriter.write(string);
+                outputWriter.write(outputString);
 
                 // Closes the FileWriter
                 outputWriter.close();

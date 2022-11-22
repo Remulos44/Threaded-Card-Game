@@ -13,7 +13,6 @@ public class Card {
         return val;
     }
 
-    @Deprecated
     public String toString() {
         return "Card: " + val;
     }
