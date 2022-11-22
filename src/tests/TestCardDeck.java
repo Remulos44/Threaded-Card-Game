@@ -10,8 +10,11 @@ public class TestCardDeck {
     @Test
     public void testaddCard() {
         CardDeck deck = new CardDeck(1, false);
-        Card card = new Card(3);
-        deck.addCard(card);
+        Card card;
+        try {
+            card = new Card(3);
+            deck.addCard(card);
+        } catch (Exception e) {}
         assertEquals(3, deck.drawCard().getValue());
     }
 
@@ -20,8 +23,10 @@ public class TestCardDeck {
         CardDeck deck = new CardDeck(1, false);
         Card card;
         for (int i = 0; i < 4; i++) {
-            card = new Card(1);
-            deck.addCard(card);
+            try {
+                card = new Card(i);
+                deck.addCard(card);
+            } catch (Exception e) {}
         }
         boolean works = true;
         try {

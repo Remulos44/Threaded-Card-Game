@@ -4,8 +4,12 @@ public class Card {
 
     private int val; // The value of the card
 
-    public Card(int val) {
-        this.val = val;
+    public Card(int val) throws Exception {
+        if (val >= 0) {
+            this.val = val;
+        } else {
+            throw new Exception("Card value cannot be a negative number");
+        }
     }
 
     public int getValue() {

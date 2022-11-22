@@ -12,20 +12,9 @@ import main.*;
 
 public class TestCardGame {
 
-    private ArrayList<Card> pack = new ArrayList<>(Arrays.asList(
-        new Card(1), new Card(4), new Card(5),
-        new Card(1), new Card(6), new Card(1),
-        new Card(3), new Card(2), new Card(6),
-        new Card(7), new Card(6), new Card(8),
-        new Card(3), new Card(2), new Card(7),
-        new Card(1), new Card(5), new Card(4),
-        new Card(2), new Card(8), new Card(4),
-        new Card(6), new Card(5), new Card(3),
-        new Card(7), new Card(7), new Card(8),
-        new Card(3), new Card(5), new Card(4),
-        new Card(8), new Card(2)));
+    private ArrayList<Card> pack = createPack();
 
-    private ArrayList<Card> badPack = new ArrayList<>(Arrays.asList(new Card(1)));
+    private ArrayList<Card> badPack = createBadPack();
         
     private ArrayList<CardDeck> decks;
 
@@ -90,5 +79,34 @@ public class TestCardGame {
             CardGame.startPlaying(players);
             
         }        
+    }
+
+    private ArrayList<Card> createPack() {
+        try {
+            return new ArrayList<>(Arrays.asList(
+                new Card(1), new Card(4), new Card(5),
+                new Card(1), new Card(6), new Card(1),
+                new Card(3), new Card(2), new Card(6),
+                new Card(7), new Card(6), new Card(8),
+                new Card(3), new Card(2), new Card(7),
+                new Card(1), new Card(5), new Card(4),
+                new Card(2), new Card(8), new Card(4),
+                new Card(6), new Card(5), new Card(3),
+                new Card(7), new Card(7), new Card(8),
+                new Card(3), new Card(5), new Card(4),
+                new Card(8), new Card(2)));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    private ArrayList<Card> createBadPack() {
+        try {
+            return new ArrayList<>(Arrays.asList(new Card(1)));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ArrayList<>();
+        }
     }
 }
