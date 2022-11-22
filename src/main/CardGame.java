@@ -30,7 +30,7 @@ public class CardGame {
         startPlaying(players);
     }
 
-    public static ArrayList<Card> getPack(int noPlayers, Scanner userInp) {
+    private static ArrayList<Card> getPack(int noPlayers, Scanner userInp) {
 
         // Asks the user to input the file location of the pack
         System.out.println("Please enter location of pack to load:");
@@ -67,7 +67,7 @@ public class CardGame {
         return pack;
     }
 
-    public static int getNoPlayers(Scanner userInp) {
+    private static int getNoPlayers(Scanner userInp) {
         // Get number of players
         int noPlayers = 0;
         System.out.println("Please enter the number of players:");

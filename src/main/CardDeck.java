@@ -33,10 +33,6 @@ public class CardDeck {
         return id;
     }
 
-    public String toString() {
-        return cards.toString();
-    }
-
     public String getOutputString() {
         String string = "deck" + id + " contents:";
             for (Card card : cards) {

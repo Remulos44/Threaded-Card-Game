@@ -16,8 +16,4 @@ public class Card {
         // Returns the card's value
         return val;
     }
-
-    public String toString() {
-        return "Card: " + val;
-    }
 }

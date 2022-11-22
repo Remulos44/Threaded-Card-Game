@@ -86,10 +86,6 @@ public class PlayerThread implements Runnable {
         recordEnding(winnerId);
     }
 
-    public String toString() {
-        return "ID: " + id + ", cards: " + hand.toString();
-    }
-
     public String getInitString() {
         // Builds a string of what to output at the beginning of the game
         String string = "player "+id+" initial hand:";
@@ -125,7 +121,7 @@ public class PlayerThread implements Runnable {
         return string;
     }
 
-    private Card drawCard() {
+    public Card drawCard() {
         // Draws card from left deck
         Card card = leftDeck.drawCard();
         // Adds card to the player's hand
@@ -133,14 +129,14 @@ public class PlayerThread implements Runnable {
         return card;
     }
 
-    private void discard(Card card) {
+    public void discard(Card card) {
         // Discards card to right deck
         rightDeck.addCard(card);
         // Removes card from the player's hand
         hand.remove(card);
     }
 
-    private boolean checkWin() {
+    public boolean checkWin() {
         int noOfSameCards = 0;
         // Finds the value of the first card in the player's hand
         int valOfCard = hand.get(0).getValue();
@@ -157,7 +153,7 @@ public class PlayerThread implements Runnable {
         return noOfSameCards == 3;
     }
     
-    private Card chooseDiscard() {
+    public Card chooseDiscard() {
         ArrayList<Card> discardables = new ArrayList<>();
         for (Card card : hand) {
             // Adds each card in the hand to the list of discardable cards if it is not of the preferred number (the player's ID)

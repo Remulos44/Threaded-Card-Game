@@ -22,21 +22,22 @@ public class TestCardGame {
 
     @Test
     public void testCreateDecks() {
-
+        // Tests that the correct number of decks are created
         decks = CardGame.createDecks(4, false);
+        assertEquals(4, decks.size());
     }
 
     @Test
     public void testCreatePlayers() {
-
-        decks = CardGame.createDecks(4, false);
-        
+        // Tests that the correct number of players are created
+        decks = CardGame.createDecks(4, false);        
         players = CardGame.createPlayers(4, decks, false);
+        assertEquals(4, players.size());
     }
 
     @Test
     public void testDealOutCards() {
-        
+        // Tests that dealing out cards fails if the pack is the wrong size        
         decks = CardGame.createDecks(4, false);
         players = CardGame.createPlayers(4, decks, false);
 
@@ -47,6 +48,7 @@ public class TestCardGame {
             assertTrue(true);
         }
 
+        // Tests that every player and deck starts with 0 cards
         decks = CardGame.createDecks(4, false);
         players = CardGame.createPlayers(4, decks, false);
 
@@ -57,6 +59,8 @@ public class TestCardGame {
             assertEquals(0, deck.showDeck().size());
         }
         
+        // Tests that dealing out cards with a valid pack means
+        // each player and deck has 4 cards
         CardGame.dealOutCards(players, decks, pack);
 
         assertEquals(decks.size(), players.size());
@@ -70,7 +74,7 @@ public class TestCardGame {
 
     @Test
     public void testStartPlaying() {
-        
+        // Tests 50 runs of the game to make sure they don't break
         for (int i = 0; i < 50; i++) {
             decks = CardGame.createDecks(4, false);
             players = CardGame.createPlayers(4, decks, false);
