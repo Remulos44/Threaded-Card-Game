@@ -8,7 +8,7 @@ import main.CardDeck;
 public class TestCardDeck {
     
     @Test
-    public void testaddCard() {
+    public void testAddCard() {
         // Testing that adding cards to a deck works in a FIFO structure
         CardDeck deck = new CardDeck(1, false);
         Card card;
@@ -36,7 +36,7 @@ public class TestCardDeck {
     }
 
     @Test
-    public void testdrawCard() {
+    public void testDrawCard() {
         // Tests that drawing 4 cards works where 4 cards were added
         CardDeck deck = new CardDeck(1, false);
         Card card;
